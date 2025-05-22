@@ -78,18 +78,18 @@ template<> auto M68000::write<Long, Reverse>(n32 address, n32 data) -> void {
 
 template<> auto M68000::extension<Byte>() -> n32 {
   wait(4);
-  r.ir  = r.irc;
+  n32 ext = (n8) r.irc;
   r.irc = read(1, 1, r.pc & ~1);
   r.pc += 2;
-  return (n8)r.ir;
+  return ext;
 }
 
 template<> auto M68000::extension<Word>() -> n32 {
   wait(4);
-  r.ir  = r.irc;
+  n32 ext = r.irc;
   r.irc = read(1, 1, r.pc & ~1);
   r.pc += 2;
-  return r.ir;
+  return ext;
 }
 
 template<> auto M68000::extension<Long>() -> n32 {
